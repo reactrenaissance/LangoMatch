@@ -25,7 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundlerIdentifier": "com.reactrenaissance.LangoMatch"
+      "bundlerIdentifier": "com.reactrenaissance.LangoMatch",
+      "bundleIdentifier": "com.reactrenaissance.LangoMatch"
     },
     "android": {
       "adaptiveIcon": {
