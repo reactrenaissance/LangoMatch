@@ -13,7 +13,8 @@
         }
       },
       "ios": {
-        "image": "latest"
+        "image": "latest",
+        "googleServicesFile": "GOOGLE_SERVICES_INFO@secret"
       }
     },
     "preview": {
