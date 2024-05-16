@@ -25,7 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundlerIdentifier": "com.reactrenaissance.LangoMatch"
+      "bundlerIdentifier": "com.reactrenaissance.LangoMatch",
+      "bundleIdentifier": "com.reactrenaissance.LangoMatch"
     },
     "android": {
       "adaptiveIcon": {
@@ -35,8 +36,7 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.reactrenaissance.LangoMatch",
-      "googleServicesFile": "GOOGLE_SERVICES_JSON@secret"
+      "package": "com.reactrenaissance.LangoMatch"
     },
     "web": {
       "favicon": "./assets/favicon.png"

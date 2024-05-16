@@ -8,9 +8,6 @@
       "distribution": "store",
       "android": {
         "buildType": "app-bundle",
-        "preBuildCommands": [
-          "./log-env.sh"
-        ],
         "env": {
           "GOOGLE_SERVICES_JSON": "GOOGLE_SERVICES_JSON@secret"
         }
