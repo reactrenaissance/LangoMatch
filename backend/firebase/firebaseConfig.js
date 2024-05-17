@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBOpty97YQPUA6cT2GEQ-zQ96D0xTNDVMY",
+    apiKey: "AIzaSyBgFFw-BUDM4JEF6sGP6ylxKgSPUq6tLow",
     authDomain: "langomatch-595aa.firebaseapp.com",
     projectId: "langomatch-595aa",
     storageBucket: "langomatch-595aa.appspot.com",

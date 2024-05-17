@@ -29,37 +29,49 @@ export default function SignUp({ navigation }) {
     };
 
     const handleSignUp = () => {
-
         if (!validateEmail(email)) {
             alert('Please enter a valid email address.');
             return;
         }
-
+    
         if (!validatePassword(password)) {
             alert('Password must be at least 8 characters long.');
             return;
         }
-
+    
         createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredentials => {
-            const user = userCredentials.user;
-            console.log('User registered:', user.email);
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    // User is signed in, navigate to Onboarding
-                    navigation.navigate('Onboarding');
-                }
+            .then(userCredentials => {
+                console.log('User registered with UID:', userCredentials.user.uid);
+                handlePostSignUp(userCredentials.user);
+            })
+            .catch(error => {
+                console.error('Error during sign up:', error);
+                handleSignUpError(error);
             });
-        })
-
-        .catch(error => {
-            if (error.code === 'auth/email-already-in-use') {
-                alert('This email address is already in use.');
+    };
+    
+    const handlePostSignUp = (user) => {
+        // Log more details about the user
+        console.log(`User details: Email: ${user.email}, UID: ${user.uid}`);
+        // Proceed to check the authentication state and navigate accordingly
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log(`User is signed in as ${user.email}`);
+                navigation.navigate('Onboarding');
             } else {
-                console.error('Error signing up.', error.message)
+                console.log("No user is signed in after sign up.");
             }
         });
     };
+    
+    const handleSignUpError = (error) => {
+        if (error.code === 'auth/email-already-in-use') {
+            alert('This email address is already in use.');
+        } else {
+            alert(`Error signing up: ${error.message}`);
+        }
+    };
+    
 
 
     return (
