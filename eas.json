@@ -7,6 +7,10 @@
       "developmentClient": false,
       "distribution": "store",
       "android": {
+        "development": {
+          "developmentClient": true,
+          "distribution": "internal"
+        },
         "buildType": "app-bundle",
         "env": {
           "GOOGLE_SERVICES_JSON": "GOOGLE_SERVICES_JSON@secret"

@@ -1,9 +1,9 @@
 import { Text, View, StyleSheet, Image } from "react-native";
 import CustomButton from "../components/CustomButton";
-import applogo from '../../../assets/images/applogo.webp'
+import applogo from '../../../assets/applogo.png'
+// import { Image } from 'expo-image';
 
 export default function AuthScreen({ navigation }) {
-
     const handleLogin = () => {
         // Handle login
         console.log('Log in button pressed');
