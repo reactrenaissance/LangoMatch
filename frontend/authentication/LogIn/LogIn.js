@@ -17,7 +17,6 @@ export default function LogIn({ navigation }) {
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with:", user.email);
-        navigation.navigate("Welcome");
       })
       .catch((error) => {
         console.error("Login failed", error.message);

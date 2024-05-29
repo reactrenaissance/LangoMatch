@@ -36,11 +36,12 @@ function MyTabs() {
           <MaterialCommunityIcons name="chat" size={size} color={color} />
         ),
       }} name="Chats" component={ChatScreen} />
-      {/* <Tab.Screen options={{
+      <Tab.Screen options={{
+        headerShown: false,
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="tools" size={size} color={color} />
         ),
-      }} name="Settings" component={SettingsScreen} /> */}
+      }} name="Settings" component={SettingsScreen} />
     </Tab.Navigator>
   );
 }

@@ -24,6 +24,7 @@ export default function ProfileCreation({ navigation }) {
   const [bio, setBio] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [location, setLocation] = useState(null);
+  const [isAvailable, setIsAvailable] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -48,16 +49,16 @@ export default function ProfileCreation({ navigation }) {
 
     if (!result.canceled) {
       const uri = result.assets[0].uri;
+      console.log(uri)
       setProfileImageUri(uri);
-      const url = await uploadImage(uri);
-      console.log({ url });
+      setIsLoading(false)
     } else {
       setIsLoading(false);
     }
   };
 
   const uploadImage = async (uri) => {
-    if (!profileImageUri) return;
+    if (!uri) return;
     setIsLoading(true);
     console.log("Auth UID:", auth.currentUser.uid);
     console.log(
@@ -91,12 +92,15 @@ export default function ProfileCreation({ navigation }) {
 
   const saveUserProfile = async () => {
     try {
+        const url = await uploadImage(profileImageUri);
+      console.log({ url });
       const userProfileDoc = doc(db, "users", auth.currentUser.uid);
       await setDoc(userProfileDoc, {
         displayName,
-        profileImageUri,
+        profileImageUri: url,
         bio,
         location,
+        isAvailable,
       });
       console.log("Profile data saved successfully!");
     } catch (error) {
@@ -121,6 +125,7 @@ export default function ProfileCreation({ navigation }) {
       alert("Failed to upload image, please try again.");
     }
   };
+
 
   return (
     <View>
