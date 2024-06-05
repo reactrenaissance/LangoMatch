@@ -9,6 +9,8 @@ import ProfileCreation from './frontend/authentication/SignUp/ProfileCreation';
 import PartnerRoulette from './frontend/userspace/PartnerRoulette/PartnerRoulette';
 import ChatScreen from './frontend/userspace/ChatScreen/ChatScreen';
 import SettingsScreen from './frontend/userspace/SettingsScreen/SettingsScreen';
+import UserDetailsScreen from './frontend/userspace/PartnerRoulette/UserDetailsScreen';
+import MessagesScreen from './frontend/userspace/MessagesScreen/MessagesScreen';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -35,7 +37,7 @@ function MyTabs() {
         tabBarIcon: ({ color, size }) => (
           <MaterialCommunityIcons name="chat" size={size} color={color} />
         ),
-      }} name="Chats" component={ChatScreen} />
+      }} name="Messages" component={MessagesScreen} />
       <Tab.Screen options={{
         headerShown: false,
         tabBarIcon: ({ color, size }) => (
@@ -63,7 +65,8 @@ export default function App() {
       <Stack.Screen name='Profile Creation' component={ProfileCreation} />
       <Stack.Screen name='Partner Roulette' component={PartnerRoulette} />
       <Stack.Screen name='Chat Screen' component={ChatScreen} />
-      {/* <Stack.Screen name='Settings' component={MyTabs} /> */}
+      <Stack.Screen name='Messages' component={MyTabs} />
+      <Stack.Screen name='User Details Screen' component={UserDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

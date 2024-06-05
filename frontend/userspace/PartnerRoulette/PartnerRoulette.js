@@ -1,15 +1,23 @@
 
 import {Text, View, StyleSheet, Button, Image } from 'react-native';
 import Card from '../../authentication/components/RouletteCards';
+import CustomButton from '../../authentication/components/CustomButton';
 import Swiper from "react-native-deck-swiper";
 import React, { useEffect, useState }  from 'react';
-import { db } from '../../../backend/firebase/firebaseConfig';
-import { collection, where, query, getDocs } from '@firebase/firestore';
+import { db, auth } from '../../../backend/firebase/firebaseConfig';
+import { collection, where, query, getDocs, addDoc, serverTimestamp } from '@firebase/firestore';
 
-const PartnerRoulette = () => {
+
+const PartnerRoulette = ({backgroundColor, navigation }) => {
     const [users, setUsers] = useState([]);
+    const [allSwiped, setAllSwiped] = useState(false)
 
-    useEffect(() => {
+    const handleSwipedAll = () => {
+        console.log('All cards have been swiped!');
+        setAllSwiped(true);
+    };
+
+
         const fetchUsers = async () => {
             const q = query(collection(db, "users"), where("isAvailable", "==", true))
             const querySnapshot = await getDocs(q);
@@ -18,19 +26,74 @@ const PartnerRoulette = () => {
                 ...doc.data()
             }))
             setUsers(fetchedUsers)
+            setAllSwiped(false);
         };
+   
+
+
+    useEffect(() => {
         fetchUsers();
     }, []);
+
+
 console.log(users, '===>usersssss')
+
+    const resetDeck= () => {
+        console.log('Resetting deck');
+        fetchUsers();
+    };
+
+    const handleSwipe = (direction, swipedOnId) => {
+        const swipedBy = getCurrentUserId();
+        if (direction == 'right') {
+            checkForMatch(swipedBy, swipedOnId);
+        }
+        addDoc(collection(db, 'Swipes'), {
+            swipedBy,
+            swipedOn: swipedOnId,
+            direction,
+            timestamp: serverTimestamp()  
+                }).then(docRef => {
+                console.log("Document written with ID: ", docRef.id);
+                }).catch(error => {
+                console.error("Error adding document: ", error);
+        });
+    };
+
+    
+
+    const getCurrentUserId = () => {
+        return auth.currentUser ? auth.currentUser.uid : null;
+    };
+
+    const goToChat = (chatId) => {
+    navigation.navigate('Chat Screen', { chatId, asd: 'qereqwrqwer' });
+};
+
+
+    const checkForMatch = async (swipedBy, swipedOnId) => {
+        const matchQuery = query(
+            collection(db, 'Swipes'), 
+            where('swipedBy', '==', swipedOnId),
+            where('swipedOn', '==', swipedBy),
+            where('direction', '==', 'right')
+        )
+        try {
+            const response = await getDocs(matchQuery);
+            if (!response.empty) {
+                navigation.navigate('User Details Screen', { userId: swipedOnId });
+            }
+        } catch (error) {
+            console.error("Failed to check for matches:", error);
+        } finally {
+            goToChat(swipedOnId);
+        }     
+    };
+
     return (
-        // <View style={styles.paigeContainer} >
-        //     {users.map(user => (
-        //         <Card key={user.id} user={user} />
-        //     ))}
-        // </View>
+
         <View style={styles.container}>
-            {/* users.length > 0 OR  !!users?.length*/}
-        {users.length > 0 && <Swiper
+        {users.length > 0 && !allSwiped ? ( <Swiper
             cards={users}
             keyExtractor={user => user.id}
             // infinite={false}
@@ -41,20 +104,28 @@ console.log(users, '===>usersssss')
                 )
             }}
             // showSecondCard={false}
-            
+            onSwipedLeft={(cardIndex) => handleSwipe('left', users[cardIndex].id)}
+            onSwipedRight={(cardIndex) => handleSwipe('right', users[cardIndex].id)}
+
             onSwiped={(cardIndex) => {console.log(cardIndex)}}
-            onSwipedAll={() => {console.log('onSwipedAll')}}
+            onSwipedAll={() => {
+                console.log('onSwipedAll')
+                handleSwipedAll();
+        }}
             cardIndex={0}
-            // backgroundColor={'red'}
             stackSize= {3}
-            stackDepth={2}
-            >
-            <Button
-                onPress={() => {console.log('oulala')}}
-                title="Press me">
-                You can press me
-            </Button>
-        </Swiper>}
+            backgroundColor={backgroundColor}
+            onTapCard={(cardIndex) => navigation.navigate('User Details Screen', { user: users[cardIndex] }) }
+            />
+    ) : (
+            <View style={styles.noMoreCardsLeft}>
+                <Text style={styles.noOne} >No one left...</Text>
+            <CustomButton
+                onPress={resetDeck}
+                title="Give them another chance!"> 
+            </CustomButton>
+            </View>
+        )}
     </View>
     );
 };
@@ -69,7 +140,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: "#F5FCFF"
+        // backgroundColor: "white"
       },
       card: {
         flex: 1,
@@ -82,6 +153,14 @@ const styles = StyleSheet.create({
       text: {
         textAlign: "center",
         fontSize: 50,
-        backgroundColor: "transparent"
+        backgroundColor: "transparent",
+      },
+      noMoreCardsLeft: {
+        alignItems: 'center',
+        marginVertical: 230,
+        height: 30,
+      },
+      noOne: {
+        paddingBottom: 10,
       }
 })
