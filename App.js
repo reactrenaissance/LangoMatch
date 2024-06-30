@@ -11,6 +11,7 @@ import ChatScreen from './frontend/userspace/ChatScreen/ChatScreen';
 import SettingsScreen from './frontend/userspace/SettingsScreen/SettingsScreen';
 import UserDetailsScreen from './frontend/userspace/PartnerRoulette/UserDetailsScreen';
 import MessagesScreen from './frontend/userspace/MessagesScreen/MessagesScreen';
+import ProfileSettings from './frontend/userspace/ProfileSettings/ProfileSettings';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -67,6 +68,7 @@ export default function App() {
       <Stack.Screen name='Chat Screen' component={ChatScreen} />
       <Stack.Screen name='Messages' component={MyTabs} />
       <Stack.Screen name='User Details Screen' component={UserDetailsScreen} />
+      <Stack.Screen name='Profile Settings' component={ProfileSettings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

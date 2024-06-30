@@ -7,7 +7,7 @@ import {
   orderBy,
   doc,
   onSnapshot,
-  getDocs,
+  getDoc,
 } from "@firebase/firestore";
 
 const MessagesScreen = ({ navigation, user }) => {
@@ -16,13 +16,18 @@ const MessagesScreen = ({ navigation, user }) => {
   useEffect(() => {
     const messagesRef = collection(db, "Messages");
     const q = query(messagesRef, orderBy("createdAt", "desc"));
+   
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const messagesArray = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-        senderProfileImage: doc.data().profileImageUri,
-      }));
+    const unsubscribe = onSnapshot(q, async (querySnapshot) => {
+
+      const messagesArray = await Promise.all(querySnapshot.docs.map(async (document) => {
+        const userData = await getDoc(doc(db, 'users', document.data().senderId));
+      return {
+        ...document.data(),
+        id: document.id,
+        userData: userData.data(),
+      }
+  }));
       setMessages([...messagesArray]);
     });
     return () => unsubscribe();
@@ -35,8 +40,8 @@ const MessagesScreen = ({ navigation, user }) => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.messageBox}>
-            <Text style={styles.senderText}>{`From: ${item.senderId}`}</Text>
-            <Image style={styles.profilePic} source={{ uri: item.senderProfileImage }} />
+            <Text style={styles.senderText}>{`${item.senderId}`}</Text>
+            <Image style={styles.profilePic} source={{uri: item.userData.profileImageUri}} />
             <Text style={styles.messageText}>{item.text}</Text>
           </View>
         )}

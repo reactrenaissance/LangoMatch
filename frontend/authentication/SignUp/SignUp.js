@@ -51,9 +51,7 @@ export default function SignUp({ navigation }) {
     };
     
     const handlePostSignUp = (user) => {
-        // Log more details about the user
         console.log(`User details: Email: ${user.email}, UID: ${user.uid}`);
-        // Proceed to check the authentication state and navigate accordingly
         auth.onAuthStateChanged((user) => {
             if (user) {
                 console.log(`User is signed in as ${user.email}`);
