@@ -9,33 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { db } from "../../../backend/firebase/firebaseConfig";
-// const data = [
-//   {
-//     id: "1",
-//     name: "Hannah",
-//     image:
-//       "https://t4.ftcdn.net/jpg/03/83/25/83/360_F_383258331_D8imaEMl8Q3lf7EKU2Pi78Cn0R7KkW9o.jpg",
-//     description: 'Description 1'
-//   },
-//   {
-//     id: "2",
-//     name: "Item 2",
-//     image:
-//       "https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg",
-//   },
-//   {
-//     id: "3",
-//     name: "Item 3",
-//     image:
-//       "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
-//   },
-//   {
-//     id: "4",
-//     name: "Item 4",
-//     image:
-//       "https://st.depositphotos.com/1144472/2003/i/950/depositphotos_20030237-stock-photo-cheerful-young-man-over-white.jpg",
-//   },
-// ];
+
 
 export default function Welcome() {
   const [data, setData] = useState([]);

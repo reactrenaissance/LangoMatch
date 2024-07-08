@@ -70,6 +70,7 @@ const PartnerRoulette = () => {
     <View style={styles.container}>
       {users.length > 0 && (
         <Swiper
+        backgroundColor="white"
           cards={users}
           keyExtractor={(user) => user._id}
           // infinite={false}
