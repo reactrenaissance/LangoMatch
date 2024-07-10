@@ -2,11 +2,16 @@ import applogo from "@assets/applogo.png";
 import { auth } from "@backend/firebase/firebaseConfig";
 import { onAuthStateChanged } from "@firebase/auth";
 import { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
 import CustomButton from "../components/CustomButton";
 // import { Image } from 'expo-image';
 
+  const { width, height } = Dimensions.get('window');
+
 export default function AuthScreen({ navigation }) {
+  
+
+
   const handleLogin = () => {
     // Handle login
     console.log("Log in button pressed");
@@ -35,13 +40,7 @@ export default function AuthScreen({ navigation }) {
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Image
           source={applogo}
-          style={{
-            width: 350,
-            height: 350,
-            marginTop: 35,
-            marginBottom: 20,
-            marginLeft: 20,
-          }}
+          style={styles.logo}
         />
       </View>
       <Text style={styles.appName}>LangoMatch</Text>
@@ -75,5 +74,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     width: "60%",
     marginVertical: 17,
+  },
+  logo: {
+    width: width, // 100% of screen width
+    height: height * 0.6, // 60% of screen height
   },
 });

@@ -15,6 +15,7 @@ import ProfileScreen from "@frontend/userspace/SettingsScreen/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ConversationScreen from "@frontend/userspace/Conversation/Messaging";
 import UserProfile from "@frontend/userspace/UserProfile";
+import AboutScreen from "@frontend/userspace/AboutScreen/AboutScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -91,6 +92,7 @@ export default function Home() {
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="Chats" component={ChatScreen} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="AboutScreen" component={AboutScreen} />
         {/* <Stack.Screen name='Settings' component={MyTabs} /> */}
       </Stack.Navigator>
     </NavigationContainer>

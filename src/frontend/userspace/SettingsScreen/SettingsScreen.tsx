@@ -62,7 +62,7 @@ const menuItems: MenuItem[] = [
     icon: (props?: React.ComponentProps<typeof Feather>) => (
       <Feather name="help-circle" size={24} color="black" {...props} />
     ),
-    onPress: () => console.log("About"),
+    onPress: (navigation?: any) => navigation.navigate("AboutScreen"),
   },
   {
     title: "Logout",
