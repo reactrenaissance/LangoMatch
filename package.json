@@ -10,7 +10,7 @@
     "install-pkg": "install.sh"
   },
   "dependencies": {
-    "@expo/vector-icons": "^14.0.0",
+    "@expo/vector-icons": "^14.0.2",
     "@firebase/firestore": "^4.6.3",
     "@gluestack-ui/config": "^1.1.18",
     "@gluestack-ui/themed": "^1.1.28",

@@ -16,7 +16,7 @@ import { db, auth, storage } from "../../../backend/firebase/firebaseConfig";
 import { doc, setDoc, addDoc } from "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { AntDesign } from "@expo/vector-icons";
 
 export default function ProfileCreation({ navigation }) {
   const [profileImageUri, setProfileImageUri] = useState(null);
@@ -135,11 +135,15 @@ export default function ProfileCreation({ navigation }) {
       <View style={{ marginLeft: 20, marginBottom: 15, width: 465 }}>
         <InputField value={displayName} onChangeText={setDisplayName} />
       </View>
+      {!profileImageUri && (
       <Text style={{ textAlign: "center", marginBottom: 10 }}>
         Upload your profile picture
       </Text>
+    )}
       <View style={styles.Button}>
+        {!profileImageUri && (
         <Button title="Select Photo" onPress={selectImage} />
+        )}
         {isLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
@@ -236,4 +240,9 @@ const styles = StyleSheet.create({
     width: "90%",
     marginLeft: 12,
   },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  }
 });
