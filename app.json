@@ -23,8 +23,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundlerIdentifier": "com.reactrenaissance.LangoMatch",
-      "bundleIdentifier": "com.reactrenaissance.LangoMatch"
+      "bundlerIdentifier": "com.reactrenaissance.LangoMatch"
     },
     "android": {
       "adaptiveIcon": {
