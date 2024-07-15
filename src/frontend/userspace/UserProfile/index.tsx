@@ -16,6 +16,7 @@ import { Dimensions } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { checkAndAddNewChat } from "@backend/firebase/mesages";
 import Toast from "react-native-toast-message";
+import { StyleSheet, View } from "react-native";
 
 export default function UserProfile() {
   const navigation = useNavigation();
@@ -125,18 +126,24 @@ export default function UserProfile() {
           <Text fontWeight="400" fontSize="16">
             {getUserByIdQuery.data.bio}
           </Text>
+          <View style={{ paddingVertical: 20}}>
           <Text>
             Already speaks:
           </Text>
-          <Text>
+          <View style={styles.languageOptions}>
+          <Text style={styles.textColor}  >
             {getUserByIdQuery.data.nativeIn?.join(', ')}
           </Text>
-          <Text>
+          </View>
+          <Text style={{ marginTop: 5}}>
             Wants to learn:
-          </Text>
-          <Text>
+          </Text >
+          <View style={styles.languageOptions}>
+          <Text style={styles.textColor}>
             {getUserByIdQuery.data.wishToLearn?.join(', ')}
           </Text>
+          </View>
+          </View>
         </VStack>
       </VStack>
 
@@ -152,3 +159,17 @@ export default function UserProfile() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  languageOptions: {
+    backgroundColor: '#54A4D0',
+    paddingVertical: 4,
+    paddingHorizontal: 25,
+    borderRadius: 6,
+    width: 250,
+    marginTop: 10,
+  },
+  textColor: {
+    color: 'white',
+  }
+})

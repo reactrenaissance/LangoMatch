@@ -18,6 +18,7 @@ const languages = [
   { label: "Vietnamese", value: "Vietnamese" },
   { label: "Korean", value: "Korean" },
   { label: "Turkish", value: "Turkish" },
+  { label: "Somali", value: "Somali"},
   { label: "Marathi", value: "Marathi" },
   { label: "Tamil", value: "Tamil" },
   { label: "Urdu", value: "Urdu" },

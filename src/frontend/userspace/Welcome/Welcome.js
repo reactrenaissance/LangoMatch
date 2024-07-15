@@ -6,14 +6,15 @@ import {
   StyleSheet,
   FlatList,
   Image,
-  ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { db } from "../../../backend/firebase/firebaseConfig";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function Welcome() {
+export default function Welcome({ navigation, user }) {
   const [data, setData] = useState([]);
-
+console.log(data[0], 'aaaa')
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
       let temp = [];
@@ -28,14 +29,20 @@ export default function Welcome() {
 
   const renderItem = ({ item }) => {
     return (
+      <SafeAreaView>
       <View style={styles.item}>
         <Image source={{ uri: item.profileImageUri }} style={styles.image} />
         <View>
+          <TouchableOpacity onPress={ () => navigation.navigate("UserProfile", { 
+              userId: item.id,
+             })} >
           <Text style={styles.text}>{item.displayName}</Text>
           <Text style={styles.location}> {item.location} </Text>
           <Text style={styles.description}>{item.bio}</Text>
+          </TouchableOpacity>
         </View>
       </View>
+      </SafeAreaView>
     );
   };
   return (
