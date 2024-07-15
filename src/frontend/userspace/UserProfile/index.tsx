@@ -125,6 +125,18 @@ export default function UserProfile() {
           <Text fontWeight="400" fontSize="16">
             {getUserByIdQuery.data.bio}
           </Text>
+          <Text>
+            Already speaks:
+          </Text>
+          <Text>
+            {getUserByIdQuery.data.nativeIn?.join(', ')}
+          </Text>
+          <Text>
+            Wants to learn:
+          </Text>
+          <Text>
+            {getUserByIdQuery.data.wishToLearn?.join(', ')}
+          </Text>
         </VStack>
       </VStack>
 

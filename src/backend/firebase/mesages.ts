@@ -36,13 +36,14 @@ export const checkAndAddNewChat = async (userId: string) => {
     const user = auth.currentUser;
     if (user) {
       const qry = query(
-        collection(db, "chats"),
-        where("users", "in", [[user.uid, userId]])
+        collection(db, "chats")
       );
 
-      const response = await getDocs(qry);
+      const resp = await getDocs(qry);
 
-      if (response.empty) {
+      const response = resp.docs.filter(doc => doc.data().users.includes(userId) && doc.data().users.includes(user.uid));
+ 
+      if (!response.length) {
         const chat = {
           _id: Crypto.randomUUID(),
           users: [user.uid, userId],
@@ -53,7 +54,7 @@ export const checkAndAddNewChat = async (userId: string) => {
 
         return chat;
       } else {
-        return response.docs[0].data();
+        return response[0].data();
       }
     }
 
@@ -104,9 +105,10 @@ export const getConversations = async () => {
 
 
     const messages = await Promise.all(updatedResponse);
-    const sortedMessages = messages.sort(
-      (a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
-    );
+    const sortedMessages = messages
+    // .sort(
+    //   (a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix()
+    // );
     return sortedMessages;
   } catch (error) {
     throw new Error(error);
@@ -125,9 +127,7 @@ export const getMessages = async (id: string) => {
       throw new Error("Chat not found");
     }
 
-    const messages = chat.messages.sort(
-      (a: any, b: any) => dayjs(a.createdAt).unix() - dayjs(b.createdAt).unix()
-    );
+    const messages = chat.messages
 
     return messages as Message[];
   } catch (error) {
@@ -149,18 +149,19 @@ export const sendMessage = async (userId: string, message: Message) => {
     const getReceiver = await getProfileById(userId);
 
     const qry = query(
-      collection(db, "chats"),
-      where("users", "in", [[user.uid, userId]])
+      collection(db, "chats")
     );
 
-    const response = await getDocs(qry);
+    const resp = await getDocs(qry);
 
-    if (response.empty) {
+    const response = resp.docs.filter(doc => doc.data().users.includes(userId) && doc.data().users.includes(user.uid));
+
+    if (!response.length) {
       throw new Error("Chat not found");
     }
 
-    const idOfChat = response.docs[0].id;
-    const oldData = response.docs[0].data();
+    const idOfChat = response[0].id;
+    const oldData = response[0].data();
 
     const updatedMessages = [
       ...oldData.messages,

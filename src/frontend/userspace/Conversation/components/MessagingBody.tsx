@@ -46,7 +46,7 @@ export default function MessagingBody({
           <VStack>
             <Text
               fontSize={14}
-              fontFamily={"body"}
+              // fontFamily={"body"}
               numberOfLines={1}
               maxW={50}
               fontWeight={700}
@@ -57,7 +57,7 @@ export default function MessagingBody({
             </Text>
             <Text
               fontSize={14}
-              fontFamily={"body"}
+              // fontFamily={"body"}
               numberOfLines={1}
               maxW={"80%"}
               fontWeight={500}
@@ -71,7 +71,9 @@ export default function MessagingBody({
         </HStack>
 
         <Box>
-          <Text fontSize={12} fontFamily={"body"} color={"#3D454A"}>
+          <Text fontSize={12} 
+          // fontFamily={"body"} 
+          color={"#3D454A"}>
             {dayjs(lastMessageTime).fromNow()}
           </Text>
         </Box>

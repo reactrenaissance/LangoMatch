@@ -18,7 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function ProfileCreation({ navigation }) {
+export default function ProfileCreation({ navigation, route }) {
   const [profileImageUri, setProfileImageUri] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [bio, setBio] = useState("");
@@ -102,6 +102,7 @@ export default function ProfileCreation({ navigation }) {
         bio,
         location,
         isAvailable,
+        ...route.params
       });
       console.log("Profile data saved successfully!");
     } catch (error) {

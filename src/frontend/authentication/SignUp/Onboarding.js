@@ -4,13 +4,13 @@ import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import CustomButton from '../components/CustomButton';
 import languages from '../components/languages';
 
-export default function Onboarding({ navigation }) {
+export default function Onboarding({ navigation, route }) {
 
-    const [SelectedLanguages, setSelectedLanguages] = useState([]);
+    const [selectedLanguages, setSelectedLanguages] = useState([]);
 
     const languagesPicked = () => {
-        if (SelectedLanguages.length > 0 ) {
-            navigation.navigate('ProfileCreation')
+        if (selectedLanguages.length > 0 ) {
+            navigation.navigate('ProfileCreation', { ...route.params, wishToLearn: selectedLanguages  })
         } else {
             alert('Please at least select one language to proceed');
         };
@@ -21,7 +21,7 @@ export default function Onboarding({ navigation }) {
             <Text style={styles.onboarding}>Pick the languages you wish to learn</Text>
             <View style={{ width: '80%', marginLeft: 40, }} >
             <MultipleSelectList 
-            selected={SelectedLanguages}
+            selected={selectedLanguages}
             setSelected={(value) => setSelectedLanguages(value)}
             style={{ height: 200, marginBottom: 45, 
              flex: 1, height: 200 }}

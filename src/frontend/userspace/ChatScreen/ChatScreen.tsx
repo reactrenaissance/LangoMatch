@@ -57,8 +57,7 @@ export default function MessageView() {
     enabled: !!id,
   });
 
-  const messages = chatsQuery.data || [];
-
+  const messages = chatsQuery.data || []
   const currentUser = React.useMemo(() => {
     return {
       _id: myProfileQuery.data?._id,
@@ -103,7 +102,7 @@ export default function MessageView() {
             <VStack justifyContent={"center"}>
               <Text
                 fontSize={14}
-                fontFamily={"body"}
+                // fontFamily={"body"}
                 fontWeight={700}
                 color={"#3D454A"}
               >
@@ -111,7 +110,7 @@ export default function MessageView() {
               </Text>
               <Text
                 fontSize={12}
-                fontFamily={"body"}
+                // fontFamily={"body"}
                 fontWeight={500}
                 color={"#3D454A"}
               >
@@ -164,7 +163,7 @@ export default function MessageView() {
             minW={40}
           >
             <Text
-              fontFamily={"body"}
+              // fontFamily={"body"}
               fontWeight={400}
               key={currentMessage._id}
               color={self ? "#fff" : "#687076"}
@@ -174,7 +173,7 @@ export default function MessageView() {
             </Text>
           </Box>
           <Text
-            fontFamily={"body"}
+            // fontFamily={"body"}
             fontWeight={400}
             fontSize={10}
             color={"#889096"}
@@ -192,7 +191,6 @@ export default function MessageView() {
     if (!message || message?.trim?.().length === 0) return;
 
     Keyboard.dismiss();
-
     const appendMessages = async () => {
       try {
         const res = GiftedChat.append(messages, msz);
@@ -206,7 +204,6 @@ export default function MessageView() {
           seen: false,
         };
 
-        console.log(message);
 
         await sendMessageMutation.mutateAsync(message);
 
@@ -248,7 +245,7 @@ export default function MessageView() {
     );
 
   const sortedMessages = messages?.sort((a, b) => {
-    return dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix();
+    return new Date(b.createdAt) - new Date(a.createdAt);
   });
 
   return (
@@ -298,7 +295,7 @@ export default function MessageView() {
         keyboardShouldPersistTaps="never"
         user={{
           _id: currentUser._id,
-          name: currentUser.user,
+          name: currentUser.name,
           avatar: currentUser.avatar,
         }}
         text={text}
