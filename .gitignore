@@ -128,3 +128,5 @@ docs/pages/versions/*/react-native/*.diff
 
 # iOS
 **/ios/.xcode.env.local
+
+langomatch-595aa-firebase-adminsdk-c17rk-d80826c41f.json
