@@ -1,9 +1,11 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { auth } from "../../../backend/firebase/firebaseConfig";
+import { auth, db } from "../../../backend/firebase/firebaseConfig";
 import CustomButton from "../components/CustomButton";
 import InputField from "../components/InputField";
+import { doc, getDoc, setDoc, updateDoc } from "@firebase/firestore";
+import { registerForPushNotificationsAsync } from "src/utils/pushNotifications";
 
 export default function LogIn({ navigation }) {
   const [email, setEmail] = useState("");
@@ -13,9 +15,16 @@ export default function LogIn({ navigation }) {
     console.log({ email, password });
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
+      .then(async (userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with:", user.email);
+
+        const token = await registerForPushNotificationsAsync()
+
+        updateDoc(doc(db, "users", user?.uid), {
+          token
+        })
+
         navigation.navigate('Welcome')
       })
       .catch((error) => {

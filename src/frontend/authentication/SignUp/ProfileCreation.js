@@ -17,6 +17,7 @@ import { doc, setDoc, addDoc } from "firebase/firestore";
 import * as ImagePicker from "expo-image-picker";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AntDesign } from "@expo/vector-icons";
+import { registerForPushNotificationsAsync } from "src/utils/pushNotifications";
 
 export default function ProfileCreation({ navigation, route }) {
   const [profileImageUri, setProfileImageUri] = useState(null);
@@ -95,6 +96,7 @@ export default function ProfileCreation({ navigation, route }) {
       const url = await uploadImage(profileImageUri);
       
       const userProfileDoc = doc(db, "users", auth.currentUser.uid);
+      const token = await registerForPushNotificationsAsync()
       await setDoc(userProfileDoc, {
         uid: auth.currentUser.uid,
         displayName,
@@ -102,6 +104,7 @@ export default function ProfileCreation({ navigation, route }) {
         bio,
         location,
         isAvailable,
+        token,
         ...route.params
       });
       console.log("Profile data saved successfully!");

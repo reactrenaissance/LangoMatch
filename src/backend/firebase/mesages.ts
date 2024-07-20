@@ -14,6 +14,7 @@ import { db } from "./firebaseConfig";
 import * as Crypto from "expo-crypto";
 import { getProfileById } from "./profile";
 import dayjs from "dayjs";
+import { sendPushNotification } from "src/utils/pushNotifications";
 
 export interface Message {
   _id: string;
@@ -42,7 +43,7 @@ export const checkAndAddNewChat = async (userId: string) => {
       const resp = await getDocs(qry);
 
       const response = resp.docs.filter(doc => doc.data().users.includes(userId) && doc.data().users.includes(user.uid));
- 
+
       if (!response.length) {
         const chat = {
           _id: Crypto.randomUUID(),
@@ -183,6 +184,19 @@ export const sendMessage = async (userId: string, message: Message) => {
     await updateDoc(doc(db, "chats", idOfChat), {
       messages: updatedMessages,
     });
+
+    if (getReceiver.token) {
+      await sendPushNotification({
+        to: getReceiver.token,
+        sound: 'default',
+        title: `Message from ${getUser.displayName}`,
+        body: message.text,
+        data: { someData: 'goes here' },
+      })
+    }
+    else {
+      console.log('no token in db')
+    }
 
     return message;
   } catch (error) {

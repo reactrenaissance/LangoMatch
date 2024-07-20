@@ -4,6 +4,7 @@ import { db } from "./firebaseConfig";
 import removeUndefinedKeys from "src/utils/removeUndefinedKeys";
 
 export interface Profile {
+  token: string;
   wishToLearn: Array<string>;
   nativeIn: Array<string>;
   _id: string;
