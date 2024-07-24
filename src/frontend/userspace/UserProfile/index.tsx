@@ -71,7 +71,7 @@ export default function UserProfile() {
       <VStack w="full" height={Dimensions.get("window").height / 2.5}>
         <Image
           source={{
-            uri: getUserByIdQuery.data.profileImageUri,
+            uri: getUserByIdQuery?.data?.profileImageUri,
           }}
           alt="profile"
           w="full"
@@ -116,7 +116,7 @@ export default function UserProfile() {
 
       <VStack px="4" py="4" gap="4">
         <Text fontWeight="bold" fontSize="lg">
-          {getUserByIdQuery.data.displayName}
+          {getUserByIdQuery?.data?.displayName}
         </Text>
 
         <VStack>
@@ -124,7 +124,7 @@ export default function UserProfile() {
             Bio
           </Text>
           <Text fontWeight="400" fontSize="16">
-            {getUserByIdQuery.data.bio}
+            {getUserByIdQuery?.data?.bio}
           </Text>
           <View style={{ paddingVertical: 20}}>
           <Text>
@@ -132,7 +132,7 @@ export default function UserProfile() {
           </Text>
           <View style={styles.languageOptions}>
           <Text style={styles.textColor}  >
-            {getUserByIdQuery.data.nativeIn?.join(', ')}
+            {getUserByIdQuery?.data?.nativeIn?.join(', ')}
           </Text>
           </View>
           <Text style={{ marginTop: 5}}>
@@ -140,7 +140,7 @@ export default function UserProfile() {
           </Text >
           <View style={styles.languageOptions}>
           <Text style={styles.textColor}>
-            {getUserByIdQuery.data.wishToLearn?.join(', ')}
+            {getUserByIdQuery?.data?.wishToLearn?.join(', ')}
           </Text>
           </View>
           </View>

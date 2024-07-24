@@ -14,7 +14,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Welcome({ navigation, user }) {
   const [data, setData] = useState([]);
-console.log(data[0], 'aaaa')
+
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "users"), (snapshot) => {
       let temp = [];
@@ -29,34 +29,36 @@ console.log(data[0], 'aaaa')
 
   const renderItem = ({ item }) => {
     return (
-      <SafeAreaView>
       <View style={styles.item}>
         <Image source={{ uri: item.profileImageUri }} style={styles.image} />
         <View>
-          <TouchableOpacity onPress={ () => navigation.navigate("UserProfile", { 
-              userId: item.id,
-             })} >
-          <Text style={styles.text}>{item.displayName}</Text>
-          <Text style={styles.location}> {item.location} </Text>
-          <Text style={styles.description}>{item.bio}</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("UserProfile", {
+            userId: item.id,
+          })} >
+            <Text style={styles.text}>{item.displayName}</Text>
+            <Text style={styles.location}> {item.location} </Text>
+            <Text style={styles.description}>{item.bio}</Text>
           </TouchableOpacity>
         </View>
       </View>
-      </SafeAreaView>
     );
   };
   return (
     <View style={styles.container}>
-      <FlatList
+      {!!data?.length && <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-      />
+      />}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 50,
+  },
   onboarding: {
     fontSize: 20,
     textAlign: "center",
@@ -65,8 +67,8 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: "row",
-    padding: 10,
-    marginVertical: 8,
+    // padding: 10,
+    marginVertical: 10,
     marginHorizontal: 16,
     borderRadius: 8,
     alignItems: "center",

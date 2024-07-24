@@ -36,20 +36,20 @@ const menuItems: MenuItem[] = [
     ),
     onPress: () => console.log("Settings"),
   },
-  {
-    title: "Appearance",
-    icon: (props?: React.ComponentProps<typeof Feather>) => (
-      <Feather name="eye" size={24} color="black" {...props} />
-    ),
-    onPress: () => console.log("Help"),
-  },
-  {
-    title: "Privacy & Security",
-    icon: (props?: React.ComponentProps<typeof Feather>) => (
-      <Feather name="lock" size={24} color="black" {...props} />
-    ),
-    onPress: () => console.log("About"),
-  },
+  // {
+  //   title: "Appearance",
+  //   icon: (props?: React.ComponentProps<typeof Feather>) => (
+  //     <Feather name="eye" size={24} color="black" {...props} />
+  //   ),
+  //   onPress: () => console.log("Help"),
+  // },
+  // {
+  //   title: "Privacy & Security",
+  //   icon: (props?: React.ComponentProps<typeof Feather>) => (
+  //     <Feather name="lock" size={24} color="black" {...props} />
+  //   ),
+  //   onPress: () => console.log("About"),
+  // },
   {
     title: "Help & Support",
     icon: (props?: React.ComponentProps<typeof Feather>) => (
